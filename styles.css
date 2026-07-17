@@ -721,6 +721,7 @@ section{ position: relative; scroll-margin-top: 84px; }
   .produto-card{ grid-row: span 1 !important; }
   .hero-stats{ grid-template-columns: repeat(2,1fr); row-gap: 24px; }
   .hero-stats div:nth-child(3){ border-left:none; padding-left:0; }
+  .marquee{ margin-top: 28px; }
 }
 @media (max-width: 680px){
   .wrap{ padding: 0 20px; }
