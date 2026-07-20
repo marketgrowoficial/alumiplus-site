@@ -317,7 +317,7 @@ section{ position: relative; scroll-margin-top: 84px; }
   color: var(--navy);
   overflow:hidden;
   padding: 14px 0;
-  clip-path: polygon(0 0, 100% 14px, 100% 100%, 0 calc(100% - 14px));
+  transform: skewY(-1.4deg);
   margin: -26px 0 -26px;
   position:relative;
   z-index: 3;
