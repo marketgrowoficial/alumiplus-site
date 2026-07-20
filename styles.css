@@ -727,9 +727,14 @@ section{ position: relative; scroll-margin-top: 84px; }
   .wrap{ padding: 0 20px; }
   .hero-inner{ padding-top: 150px; }
   .hero h1{ font-size: 2.5rem; }
+  .hero-media{
+    background-image: url('assets/img/produto-madeira-aluminio.jpg');
+    background-position: center;
+    transform: scale(1.1);
+  }
   .hero-media::after{
     background:
-      linear-gradient(180deg, rgba(9,17,24,.97) 0%, rgba(9,17,24,.93) 100%);
+      linear-gradient(180deg, rgba(9,17,24,.88) 0%, rgba(9,17,24,.8) 100%);
   }
   .scroll-cue{ display:none; }
   .gallery{ grid-template-columns: repeat(2,1fr); grid-auto-rows: 160px; }
