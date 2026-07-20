@@ -317,7 +317,11 @@ section{ position: relative; scroll-margin-top: 84px; }
   color: var(--navy);
   overflow:hidden;
   padding: 14px 0;
-  transform: skewY(-1.4deg);
+  transform: skewY(-1.4deg) translateZ(0);
+  -webkit-transform: skewY(-1.4deg) translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
   margin: -26px 0 -26px;
   position:relative;
   z-index: 3;

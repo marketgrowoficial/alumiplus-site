@@ -12,23 +12,30 @@ $mime = @{
 
 while ($listener.IsListening) {
   $context = $listener.GetContext()
-  $req = $context.Request
-  $res = $context.Response
-  $path = $req.Url.LocalPath
-  if ($path -eq "/") { $path = "/index.html" }
-  $filePath = Join-Path $root $path.TrimStart("/")
-  if (Test-Path $filePath -PathType Leaf) {
-    $ext = [System.IO.Path]::GetExtension($filePath)
-    $ct = $mime[$ext]
-    if (-not $ct) { $ct = "application/octet-stream" }
-    $bytes = [System.IO.File]::ReadAllBytes($filePath)
-    $res.ContentType = $ct
-    $res.ContentLength64 = $bytes.Length
-    $res.OutputStream.Write($bytes, 0, $bytes.Length)
-  } else {
-    $res.StatusCode = 404
-    $msg = [System.Text.Encoding]::UTF8.GetBytes("404 Not Found: $path")
-    $res.OutputStream.Write($msg, 0, $msg.Length)
+  try {
+    $req = $context.Request
+    $res = $context.Response
+    $res.KeepAlive = $false
+    $path = $req.Url.LocalPath
+    if ($path -eq "/") { $path = "/index.html" }
+    $filePath = Join-Path $root $path.TrimStart("/")
+    if (Test-Path $filePath -PathType Leaf) {
+      $ext = [System.IO.Path]::GetExtension($filePath)
+      $ct = $mime[$ext]
+      if (-not $ct) { $ct = "application/octet-stream" }
+      $bytes = [System.IO.File]::ReadAllBytes($filePath)
+      $res.ContentType = $ct
+      $res.ContentLength64 = $bytes.Length
+      $res.OutputStream.Write($bytes, 0, $bytes.Length)
+    } else {
+      $res.StatusCode = 404
+      $msg = [System.Text.Encoding]::UTF8.GetBytes("404 Not Found: $path")
+      $res.ContentLength64 = $msg.Length
+      $res.OutputStream.Write($msg, 0, $msg.Length)
+    }
+  } catch {
+    Write-Host "Request error: $_"
+  } finally {
+    try { $context.Response.OutputStream.Close() } catch {}
   }
-  $res.OutputStream.Close()
 }
